@@ -102,8 +102,77 @@
     </form>
     <script th:src="@{/lib/js/jquery/jquery.min.js}"></script>
     <script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-    <script>
+    <script th:inline="javascript">
+        // 定义contextPath
+        const path =[[${#request.getContextPath()}]];
+        const emptyOption = "<option value=''>-- 请选择 --</option>"
+        $(function () {
+            House.queryArea('province');
 
+            $("#province").change(function () {
+                $('#city').html(emptyOption);
+                $('#area').html(emptyOption);
+                if(this.value){ // 当value的值不是空字符串/undefined的时候执行查询
+                    House.queryArea('city',this.value);
+                }
+            });
+
+            $('#city').change(function () {
+                $('#area').html(emptyOption)
+                if(this.value){
+                    House.queryArea('area',this.value)
+                }
+            });
+
+            // 加载租赁方式 朝向 户型的字典数据
+            House.queryDict('rent_mode');
+            House.queryDict('orientation');
+            House.queryDict('house_type');
+        })
+
+        // 定义house对象
+        let House = {
+            queryArea:function(documentId,pid){
+                // 如果不传pid，则默认为0，就是默认查询省一级
+                pid = pid || 0;
+                $.ajax({
+                    url: path + "/area/queryByPid",
+                    type: 'GET',
+                    data: 'pid=' + pid,
+                    dataType: 'json',
+                    success: function (res) {
+                        let options = "<option value=''>-- 请选择 --</option>"
+                        for (let area of res){
+                            options += "<option value='"+ area.id +"'>"
+                                    + area.name
+                                    + "</option>";
+                        }
+                        $("#" + documentId).html(options);
+                    }
+                })
+            },
+            /**
+             * 这里把dom的id和groupId设置为相同的值，所以不需要传入domid了
+             * @param groupId
+             */
+            queryDict:function(groupId){
+                $.ajax({
+                    url: path + "/dict/" + groupId,
+                    type: 'GET',
+                    data:'',
+                    success:function(res){
+                        let options = "<option value=''>-- 请选择 --</option>";
+                        $.each(res,function (index,dict) {
+                           options += "<option value='" + dict.value + "'>"
+                                   + dict.name
+                                   + "</option>"
+                        });
+                        // 为租赁方式 户型的下拉框赋值
+                        $('#' + groupId).html(options)
+                    }
+                });
+            },
+        };
     </script>
 </body>
 </html>
