@@ -22,3 +22,7 @@ mybatis:
 
 pagehelper:
   reasonable: true
+
+logging:
+  level:
+    com.etoak.mapper: DEBUG
