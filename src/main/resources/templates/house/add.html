@@ -16,12 +16,13 @@
 <body>
     <form th:action="@{/house/add}"
           method="post"
+          id="addForm"
           enctype="multipart/form-data"
           class="form-horizontal" role="form" >
         <!-- 省 -->
         <div class="form-group">
             <label for="province" class="col-sm-2 control-label">所在省</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="province" id="province" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -30,7 +31,7 @@
         <!-- 市 -->
         <div class="form-group">
             <label for="city" class="col-sm-2 control-label">所在市</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="city" id="city" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -39,7 +40,7 @@
         <!-- 区 -->
         <div class="form-group">
             <label for="area" class="col-sm-2 control-label">所在县区</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="area" id="area" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -48,7 +49,7 @@
         <!-- 租赁方式 -->
         <div class="form-group">
             <label for="rent_mode" class="col-sm-2 control-label">租赁方式</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="rent_mode" id="rent_mode" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -57,7 +58,7 @@
         <!-- 朝向 -->
         <div class="form-group">
             <label for="orientation" class="col-sm-2 control-label">朝向</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="orientation" id="orientation" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -66,7 +67,7 @@
         <!-- 户型 -->
         <div class="form-group">
             <label for="house_type" class="col-sm-2 control-label">户型</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <select name="house_type" id="house_type" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
@@ -75,26 +76,26 @@
         <!-- 租金 -->
         <div class="form-group">
             <label for="rental" class="col-sm-2 control-label">租金</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <input type="number" name="rental" id="rental" class="form-control">
             </div>
         </div>
         <!-- 地址 -->
         <div class="form-group">
             <label for="address" class="col-sm-2 control-label">地址</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <input type="text" name="address" id="address" class="form-control" placeholder="请输入用户住址">
             </div>
         </div>
         <!-- 图片 -->
         <div class="form-group">
             <label for="file" class="col-sm-2 control-label">房屋图片</label>
-            <div class="col-sm-3">
+            <div class="col-sm-3 input-group">
                 <input type="file" name="file" id="file" class="form-control">
             </div>
         </div>
         <!-- 添加按钮 -->
-        <div class="form-group">
+        <div class="form-group ">
             <div class="col-sm-offset-2 col-sm-3">
                 <button type="submit" class="btn btn-info">添加</button>
             </div>
@@ -102,6 +103,8 @@
     </form>
     <script th:src="@{/lib/js/jquery/jquery.min.js}"></script>
     <script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/lib/js/jquery/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/lib/js/jquery/validate/messages_zh.min.js}"></script>
     <script th:inline="javascript">
         // 定义contextPath
         const path =[[${#request.getContextPath()}]];
@@ -128,6 +131,8 @@
             House.queryDict('rent_mode');
             House.queryDict('orientation');
             House.queryDict('house_type');
+
+            House.validateForm();
         })
 
         // 定义house对象
@@ -171,6 +176,50 @@
                         $('#' + groupId).html(options)
                     }
                 });
+            },
+            validateForm:function () {
+                $('#addForm').validate({
+
+                    debug: false,
+                    submitHandler: function(form){
+                        alert('检验成功!')
+                    },
+
+                    // 修改提示信息的元素类型，m默认是label，这修改成div
+                    // 这里使用layui的时候一定要改成div
+                    errorElement: 'div',
+
+                    /**
+                     *
+                     * @param errorEle：错误提示消息元素的显示位置
+                     * @param validateEle
+                     */
+                    errorPlacement: function(errorEle,validateEle){
+                        errorEle.addClass('input-group-addon');
+                        errorEle.appendTo(validateEle.parent());
+                    },
+
+                    success:function(msgElement){
+                        msgElement.addClass('input-group-addon').text('OK')
+                    },
+
+                    // 校验规则
+                    rules: {
+                        province: 'required',
+                        address: {
+                            required: true,
+                            maxlength: 10
+                        },
+                    },
+                    // 校验信息提示
+                    messages: {
+                        province: '必选项',
+                        address: {
+                            required: '必填项',
+                            maxlength: '10个字符以内'
+                        }
+                    }
+                })
             },
         };
     </script>
