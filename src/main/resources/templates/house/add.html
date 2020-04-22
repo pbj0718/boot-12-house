@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="rent_mode" class="col-sm-2 control-label">租赁方式</label>
             <div class="col-sm-3 input-group">
-                <select name="rent_mode" id="rent_mode" class="form-control">
+                <select name="rentMode" id="rent_mode" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
             </div>
@@ -68,7 +68,7 @@
         <div class="form-group">
             <label for="house_type" class="col-sm-2 control-label">户型</label>
             <div class="col-sm-3 input-group">
-                <select name="house_type" id="house_type" class="form-control">
+                <select name="houseType" id="house_type" class="form-control">
                     <option value="">-- 请选择 --</option>
                 </select>
             </div>
@@ -137,7 +137,7 @@
 
         // 定义house对象
         let House = {
-            queryArea:function(documentId,pid){
+            queryArea: function (documentId, pid) {
                 // 如果不传pid，则默认为0，就是默认查询省一级
                 pid = pid || 0;
                 $.ajax({
@@ -147,10 +147,10 @@
                     dataType: 'json',
                     success: function (res) {
                         let options = "<option value=''>-- 请选择 --</option>"
-                        for (let area of res){
-                            options += "<option value='"+ area.id +"'>"
-                                    + area.name
-                                    + "</option>";
+                        for (let area of res) {
+                            options += "<option value='" + area.id + "'>"
+                                + area.name
+                                + "</option>";
                         }
                         $("#" + documentId).html(options);
                     }
@@ -160,30 +160,30 @@
              * 这里把dom的id和groupId设置为相同的值，所以不需要传入domid了
              * @param groupId
              */
-            queryDict:function(groupId){
+            queryDict: function (groupId) {
                 $.ajax({
                     url: path + "/dict/" + groupId,
                     type: 'GET',
-                    data:'',
-                    success:function(res){
+                    data: '',
+                    success: function (res) {
                         let options = "<option value=''>-- 请选择 --</option>";
-                        $.each(res,function (index,dict) {
-                           options += "<option value='" + dict.value + "'>"
-                                   + dict.name
-                                   + "</option>"
+                        $.each(res, function (index, dict) {
+                            options += "<option value='" + dict.value + "'>"
+                                + dict.name
+                                + "</option>"
                         });
                         // 为租赁方式 户型的下拉框赋值
                         $('#' + groupId).html(options)
                     }
                 });
             },
-            validateForm:function () {
+            validateForm: function () {
                 $('#addForm').validate({
 
                     debug: false,
-                    submitHandler: function(form){
-                        alert('检验成功!')
-                    },
+                    //submitHandler: function (form) {
+                       // alert('检验成功!')
+                    //},
 
                     // 修改提示信息的元素类型，m默认是label，这修改成div
                     // 这里使用layui的时候一定要改成div
@@ -194,18 +194,26 @@
                      * @param errorEle：错误提示消息元素的显示位置
                      * @param validateEle
                      */
-                    errorPlacement: function(errorEle,validateEle){
+                    errorPlacement: function (errorEle, validateEle) {
                         errorEle.addClass('input-group-addon');
                         errorEle.appendTo(validateEle.parent());
                     },
 
-                    success:function(msgElement){
+                    success: function (msgElement) {
                         msgElement.addClass('input-group-addon').text('OK')
                     },
 
                     // 校验规则
                     rules: {
                         province: 'required',
+                        city: 'required',
+                        area: 'required',
+                        rentMode: 'required',
+                        rental: {
+                            required: true,
+                            positiveInt: true,
+                            max: 100000
+                        },
                         address: {
                             required: true,
                             maxlength: 10
@@ -214,12 +222,24 @@
                     // 校验信息提示
                     messages: {
                         province: '必选项',
+                        city: '必选项',
+                        area: '必选项',
+                        rentMode: '必选项',
+                        rental:{
+                            required: '必填项',
+                            positiveInt: '必须是大于0的整数',
+                            max: '最大为10万'
+                        },
                         address: {
                             required: '必填项',
                             maxlength: '10个字符以内'
                         }
                     }
-                })
+                });
+                $.validator.addMethod('positiveInt', function (value, element) {
+                    let reg = /^\+?[1-9]\d*$/;
+                    return this.optional(element) || (reg.test(value));
+                }, '必须是大于0的正整数')
             },
         };
     </script>
