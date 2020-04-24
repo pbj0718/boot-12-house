@@ -22,4 +22,11 @@ public interface HouseService {
      * @return
      */
     Page<HouseVo> queryList(int pageNum, int pageSize, HouseVo houseVo, String[] rentalList);
+
+    /**
+     * 更新房源
+     * @param house
+     * @return
+     */
+    int updateHouse(House house);
 }

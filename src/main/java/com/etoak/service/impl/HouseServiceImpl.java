@@ -58,6 +58,21 @@ public class HouseServiceImpl implements HouseService {
     }
 
     /**
+     * 更新房源信息
+     * @param house
+     * @return
+     */
+    @Override
+    public int updateHouse(House house) {
+        if(house.getCity() !=null){
+            Area area = areaMapper.queryById(house.getArea());
+            house.setAreaName(area.getName());
+        }
+
+        return houseMapper.updateHouse(house);
+    }
+
+    /**
      * 处理价格范围
      * @param houseVo
      * @param rentalList

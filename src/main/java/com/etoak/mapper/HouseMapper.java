@@ -20,4 +20,6 @@ public interface HouseMapper {
      * @return
      */
     List<HouseVo> queryList(HouseVo houseVo);
+
+    int updateHouse(House house);
 }
