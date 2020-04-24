@@ -10,4 +10,8 @@ public class User {
     private String gender;
     private Integer age;
     private String birthday;
+    // 用户邮箱
+    private String email;
+    // 用户状态
+    private Integer state;
 }
