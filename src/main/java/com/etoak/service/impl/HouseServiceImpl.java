@@ -93,4 +93,9 @@ public class HouseServiceImpl implements HouseService {
             houseVo.setRentalMapList(rentalMapList);
         }
     }
+
+    @Override
+    public int deleteById(int id) {
+        return houseMapper.deleteById(id);
+    }
 }
