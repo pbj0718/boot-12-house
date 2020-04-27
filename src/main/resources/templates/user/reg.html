@@ -22,40 +22,40 @@
         年龄
         性别
     -->
-    <form th:action="@{/user/reg}" method="post" class="form-horizontal" role="form">
+    <form th:action="@{/user/reg}" method="post" class="form-horizontal" role="form" id="regForm">
         <!-- 1. 用户名 -->
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label">用户名</label>
             <div class="col-sm-3 input-group">
-                <input type="text" id="username" name="name">
+                <input type="text" id="username" class="form-control" name="name">
             </div>
         </div>
         <!-- 2. 密码 -->
         <div class="form-group">
             <label for="password" class="col-sm-2 control-label">密码</label>
             <div class="col-sm-3 input-group">
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" class="form-control" name="password">
             </div>
         </div>
         <!-- 3. 确认密码 -->
         <div class="form-group">
             <label for="confirm_password" class="col-sm-2 control-label">确认密码</label>
             <div class="col-sm-3 input-group">
-                <input type="password" id="confirm_password" name="confirmpassword">
+                <input type="password" id="confirm_password" class="form-control" name="confirmPassword">
             </div>
         </div>
         <!-- 4. 邮箱 -->
         <div class="form-group">
             <label for="email" class="col-sm-2 control-label">邮箱</label>
             <div class="col-sm-3 input-group">
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" class="form-control" name="email">
             </div>
         </div>
         <!-- 5. 年龄 -->
         <div class="form-group">
             <label for="age" class="col-sm-2 control-label">年龄</label>
             <div class="col-sm-3 input-group">
-                <input type="number" id="age" name="age">
+                <input type="number" id="age" class="form-control" name="age">
             </div>
         </div>
         <!-- 6. 性别 -->
@@ -86,6 +86,59 @@
     <script th:inline="javascript">
         // 定义contextPath
         const path = [[${#request.getContextPath()}]];
+        $(function () {
+            user.regValidate({
+            })
+        })
+
+        let user={
+            regValidate:function(){
+              $('#regForm').validate({
+                  errorElement: 'div',
+                  success: function(successElement) {
+                      successElement.addClass('input-group-addon').text('OK')
+                  },
+                  errorPlacement: function(errorEle, element){
+                      errorEle.addClass('input-group-addon');
+                      errorEle.appendTo(element.parent());
+                  },
+                  rules: {
+                      name: {
+                          required: true,
+                          /**
+                           * ajax远程校验，返回true则表示通过，用户名可用
+                           * 返回false表示校验不通过
+                           */
+                          remote: {
+                              url: path + '/user/validateName',
+                              type: 'GET',
+                              data: {
+                                  name: function () {
+                                      return $('#username').val();
+                                  }
+                              }
+                          }
+                      },
+                      password: 'required',
+                      confirmPassword: {
+                          required: true,
+                          equalTo: '#password'
+                      }
+                  },
+                  messages:{
+                      name:{
+                          required: '必填项',
+                          remote: '用户名已经存在'
+                      },
+                      password: '必填项',
+                      confirmPassword: {
+                          required: '必填项',
+                          equalTo: '两次输入的密码不一致'
+                      }
+                  }
+              })
+            },
+        }
     </script>
     </body>
 </html>

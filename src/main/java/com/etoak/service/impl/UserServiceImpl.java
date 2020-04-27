@@ -31,16 +31,18 @@ public class UserServiceImpl implements UserService {
         // 把自增id返回到user对象
         log.info("User.id - {}",user.getId());
         // 发送jms消息
-        jmsTemplate.send("email",session -> {
+        /*jmsTemplate.send("email",session -> {
             Email email = new Email();
             email.setSubject("用户激活邮件");
             email.setReceiver(user.getEmail());
             email.setContent("请点击激活:http://localhose:8000/boot/user/active" + user.getId());
             return session.createTextMessage(JSONObject.toJSONString(email));
-        });
+        });*/
         return addResult;
     }
 
-
-
+    @Override
+    public User queryByName(String name) {
+        return userMapper.queryByName(name);
+    }
 }
