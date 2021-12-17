@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
 public class AllExport {
 
     public static void main(String[] args) throws Exception {
-        //addWaterMarkWhenDownload("E:\\test1.docx", "E:\\test1_temp.docx", "内部资料 严禁外传");
-        addWaterMarkWhenDownload("E:\\test1.pdf", "E:\\test1_temp.pdf", "内部资料 严禁外传");
+        addWaterMarkWhenDownload("E:\\test11.docx", "E:\\test11_temp.docx", "内部资料 严禁外传");
+        //addWaterMarkWhenDownload("E:\\test1.pdf", "E:\\test1_temp.pdf", "内部资料 严禁外传");
     }
 
     public static void addWaterMarkWhenDownload(String inputSrc, String outputSrc, String waterMark) throws Exception {
@@ -61,7 +61,7 @@ public class AllExport {
             stamper = new PdfStamper(reader, new FileOutputStream(outSrc));
             File file = new File("static/fonts/STSong.ttf");
             System.out.println(file.getPath());
-            BaseFont base = BaseFont.createFont("src/main/resources/fonts/STSONG.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            BaseFont base = BaseFont.createFont("static/fonts/STSONG.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             PdfGState gs = new PdfGState();
             gs.setFillOpacity(0.3f);
             gs.setStrokeOpacity(0.4f);
