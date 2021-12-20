@@ -48,7 +48,7 @@ public class TestWaterPrint {
         }
 
         // 间隔
-        int interval = 30;
+        int interval = 50;
         // 获取水印文字的高度和宽度
         int textH = 0, textW = 0;
         JLabel label = new JLabel();
@@ -84,8 +84,8 @@ public class TestWaterPrint {
             float pageWidth = pageSizeWithRotation.getWidth();
 
             // 根据纸张大小多次添加， 水印文字成30度角倾斜
-            for (int height = interval + textH; height < pageHeight; height = height + textH * 3) {
-                for (int width = interval + textW; width < pageWidth + textW; width = width + textW * 3) {
+            for (int height = interval + textH; height < pageHeight; height = height + textH * 6) {
+                for (int width = interval + textW; width < pageWidth + textW; width = width + textW * 2) {
                     content.showTextAligned(Element.ALIGN_LEFT, waterMarkName, width - textW, height - textH, 55);
                 }
             }
