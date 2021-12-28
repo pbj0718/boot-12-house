@@ -27,8 +27,9 @@ import java.util.regex.Pattern;
 public class AllExport {
 
     public static void main(String[] args) throws Exception {
-        addWaterMarkWhenDownload("E:\\test11.docx", "E:\\test11_temp.docx", "内部资料 严禁外传");
+        //addWaterMarkWhenDownload("E:\\test11.docx", "E:\\test11_temp.docx", "内部资料 严禁外传");
         //addWaterMarkWhenDownload("E:\\test1.pdf", "E:\\test1_temp.pdf", "内部资料 严禁外传");
+        addWaterMarkWhenDownload("E:\\test22.xlsx", "E:\\test22_temp.xlsx", "内部资料 严禁外传");
     }
 
     public static void addWaterMarkWhenDownload(String inputSrc, String outputSrc, String waterMark) throws Exception {
@@ -185,7 +186,7 @@ public class AllExport {
      */
     public static BufferedImage createWaterMarkImage(String waterMark) {
         String[] textArray = waterMark.split("\n");
-        Font font = new Font("microsoft-yahei", Font.PLAIN, 20);
+        Font font = new Font("static/fonts/msyh.ttf", Font.PLAIN, 20);
         Integer width = 500;
         Integer height = 200;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
