@@ -8,8 +8,6 @@ import com.etoak.service.HouseService;
 import com.etoak.utils.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class HouseController {
     @Value("${upload.savePathPrefix}")
     public String savePathPrefix;
 
-    @Autowired
+    @Resource
     HouseService houseService;
 
     @RequestMapping("/toAdd")

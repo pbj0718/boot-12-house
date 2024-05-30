@@ -1,4 +1,4 @@
-package com.etoak.utils;
+package utils.waterMark;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

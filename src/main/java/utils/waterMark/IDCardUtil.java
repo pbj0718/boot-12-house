@@ -1,4 +1,4 @@
-package com.etoak.utils;
+package utils.waterMark;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
