@@ -1,5 +1,5 @@
-this is a simple spring boot project transport into github for exec.
-this project use Spring Boot + BootStrap + mybatis + jquery,
-only written for new learner(as for me)
+这是一个简单的基于某个练手项目开发起家的菜鸟项目
 
-add some useful work util
+基于这个项目，后续实战开发中遇到的各种问题对应的解决方案或者优秀的工具类会陆续添加进来
+
+仅作为个人学习使用，非常适合我这种Java菜鸟_(:з」∠)_
