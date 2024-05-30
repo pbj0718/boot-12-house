@@ -1,15 +1,28 @@
-package Utils.HttpClientSample.post;
+package utils.httpClientUtil.post;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 import okhttp3.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @description: form-data调用（okhttp请求）
@@ -78,6 +91,46 @@ public class formDataClientSample {
             // 处理响应
             log.info(responseBody);
         }
+    }
+
+    /**
+     *
+     * @param uriAPI
+     * @param jsonHeads
+     * @param localFile
+     * @return
+     */
+    public void doPostForFromData(String uriAPI, JSONObject jsonHeads, File localFile) throws IOException {
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("YOUR_ENDPOINT_URL");
+
+        // 准备 form-data 参数
+        List<BasicNameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("param1", "value1"));
+        params.add(new BasicNameValuePair("param2", "value2"));
+
+        // 设置编码格式为 UTF-8
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create().setCharset(StandardCharsets.UTF_8);
+
+        // 添加文本参数
+        for (BasicNameValuePair param : params) {
+            builder.addTextBody(param.getName(), param.getValue(), ContentType.TEXT_PLAIN);
+        }
+
+        // 添加文件参数
+        File file = new File("path_to_your_file");
+        builder.addBinaryBody("file", file, ContentType.APPLICATION_OCTET_STREAM, file.getName());
+
+        // 构建请求实体
+        HttpEntity multipart = builder.build();
+        httpPost.setEntity(multipart);
+
+        // 发送请求
+        HttpResponse response = httpClient.execute(httpPost);
+
+        // 处理响应
+        int statusCode = response.getStatusLine().getStatusCode();
+        log.info("Status Code: " + statusCode);
     }
 
 }

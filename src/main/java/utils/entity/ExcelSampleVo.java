@@ -1,4 +1,4 @@
-package Utils.Entity;
+package utils.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;

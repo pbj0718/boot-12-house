@@ -1,6 +1,6 @@
-package Utils.FileUtils;
+package utils.fileUtils;
 
-import Utils.Entity.ExcelSampleVo;
+import utils.entity.ExcelSampleVo;
 import com.alibaba.excel.EasyExcelFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

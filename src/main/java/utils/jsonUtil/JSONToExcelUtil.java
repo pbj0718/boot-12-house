@@ -1,4 +1,4 @@
-package Utils.JsonUtil;
+package utils.jsonUtil;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;

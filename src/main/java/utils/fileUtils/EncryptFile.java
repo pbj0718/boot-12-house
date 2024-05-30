@@ -1,4 +1,4 @@
-package Utils.FileUtils;
+package utils.fileUtils;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
