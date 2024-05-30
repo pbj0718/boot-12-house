@@ -63,7 +63,7 @@ public class EncryptFile extends File {
      * @param fileName
      * @return
      */
-    public static EncryptFile encryptFileFactory(String fileName){
+    public static EncryptFile encryptFileFactory(String fileName) throws Exception {
         return encryptFileFactory(fileName,null);
     }
 
