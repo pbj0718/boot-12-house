@@ -120,7 +120,7 @@ public class TestWaterPrint {
         // 使用classpath下面的字体库
         BaseFont base = null;
         try {
-            base = BaseFont.createFont("/calibri.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            base = BaseFont.createFont("static/fonts/STSONG.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
         } catch (Exception e) {
             // 日志处理
             e.printStackTrace();
