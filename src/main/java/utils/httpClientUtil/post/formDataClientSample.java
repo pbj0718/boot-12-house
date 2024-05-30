@@ -11,6 +11,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.springframework.stereotype.Component;
 
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
@@ -30,6 +31,7 @@ import java.util.List;
  * @date: 2024-05-30
  * @version: V1.0
  */
+@Component
 @Slf4j
 public class formDataClientSample {
 
